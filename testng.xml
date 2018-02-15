@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2015 Intellectual Reserve, Inc. All rights reserved.
+  -->
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="ExpectedPass">
+  <test name="build">
+    <groups>
+      <run>
+        <exclude name="Broken"/>
+      </run>
+    </groups>
+    <packages>
+      <package name="mypackage.*"/>
+    </packages>
+  </test>
+</suite>
