@@ -22,6 +22,7 @@
     <cargo.debug.port>5005</cargo.debug.port>
     <cargo.port>8080</cargo.port>
     <cargo.skipTests>false</cargo.skipTests>
+    <ref.image>ApacheFoundation.png</ref.image>
     <tomcat.url>http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.22/bin/apache-tomcat-8.0.22.zip</tomcat.url>
   </properties>
 
@@ -32,7 +33,6 @@
       <version>${testng.version}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
@@ -45,13 +45,24 @@
     <finalName>platform-badge-web-app</finalName>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>src/main/webapp</directory>
+              <filtering>true</filtering>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven2-plugin</artifactId>
-        <version>1.4.16</version>
-
+        <version>1.6.6</version>
         <configuration>
           <skip>${cargo.skipTests}</skip>
-
           <container>
             <containerId>tomcat8x</containerId>
             <zipUrlInstaller>
@@ -75,24 +86,32 @@
           </configuration>
         </configuration>
       </plugin>
-
     </plugins>
   </build>
 
+  <!--### Profile Best Practices ###-->
+  <!--### https://dzone.com/articles/maven-profile-best-practices ###-->
+  <!--1. The build should pass when no profile has been activated.-->
+  <!--2. Never use <activeByDefault>-->
+  <!--3. Profiles should manage build-time variables, not run-time variables,-->
+  <!--    and not alternative version of the built artifact.-->
   <profiles>
     <profile>
       <id>beta</id>
       <properties>
+        <ref.image>beta.png</ref.image>
       </properties>
     </profile>
     <profile>
       <id>integration</id>
       <properties>
+        <ref.image>integration.jpeg</ref.image>
       </properties>
     </profile>
     <profile>
       <id>localhost</id>
       <properties>
+        <ref.image>localhost.png</ref.image>
       </properties>
     </profile>
   </profiles>
